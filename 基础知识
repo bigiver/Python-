@@ -1,0 +1,2 @@
+1.Python 除法问题
+  两个整数相除，计算结果的小数部分会被截取掉，如果两个数有任一个是float类型则可以正常显示为float类型。如果想执行普通的除法则需在前面加上如下语句：from __future__ import division (future前后分别是两个下划线)
