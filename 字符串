@@ -1,0 +1,50 @@
+字符串与数字拼接需要把值转换为字符串，值转换的三种方法：
+1)str :容易阅读（打印出的值没有引号）
+  print str("hello") >> hello 
+  print str(1000L) >> 1000
+  print "string" + str(1000)
+2)repr:把结果字符串转换为合法的Python表达式（例如字符串加单引号，长数字加L）
+  print repr("hello") >> 'hello' 
+  print repr(1000L) >> 1000L
+  print "string" + repr(1000)
+
+3)反引号:可以用来拼接数字和字符串，效果与repr相同（python3.0中已经不在使用）
+  print "string" + `1000` 
+  temp = 1000
+  print "string" + `temp`  #是反引号不是单引号
+
+长字符串：长字符串可以用三个单引号（’‘’）或者三个双引号（“”“）表示，内部可以使用单引号或者双引号而且不用反斜线转义。
+
+原始字符串：
+1）转义符‘\’：如果放在句尾可以转义换行 
+print ”hello，\ 
+       world!“
+结果打印出：hello，world!
+
+2）'\n':换行，如果字符串结果中包含\n 就需要用‘\’转义
+	print "c:\Program Files\\no"
+3）用原始字符串，以r开头，可以在原始字符串中放入任何字符，遇到引号需要转义，但是最终输出的结果会包含转义的反斜线，其他转义符如\n则不起作用
+	print 'let\'s go!'  >> let\'s go!
+	注：原始字符串不能以反斜杠‘\’结尾
+
+字符串格式化：
+1）可以使用元组或者字典，如果使用列表或者其他序列代替元组，那么序列会被解释为一个值，只有元组和字典可以格式化一个以上的值。
+2）如果字符串中包含%则需要写成%%(print ”float %.2f %%“ % 0.23)
+3）模板字符串：
+     a.	from string import Template
+	s = Template('$o is $o! $t is $t')
+	s.substitute(o='one',t='two')
+	one is one! two is two
+     b. 如果替换的字段是单词的一部分，则参数需要用大括号括起来
+	s = Template("It's ${x}thon!)
+	s.substitute(x='py')
+	It's python!
+     c. 用$$插入美元符号（$）
+	s = Template("Make $$ selling $x!")
+     d. 替换的值可以使用字典
+	s = Template('$o is $o! $t is $t')
+	d = {}
+	d['o'] = 'one'
+	d['t'] = 'two'
+	s.substitute(d)
+	one is one! two is two
