@@ -1,1 +1,84 @@
 
+1）字典由多个键及与其对应的值构成的对组成（键/值也称为项）。空字典：{}.
+2）dict函数，通过其他映射或者键/值对建立字典
+	items = [('name','zhangsan'),('age',34)]
+	d = dict(items)
+	d >>> {'name':'zhangsan','age':34}
+	#通过关键字参数创建字典
+	d = dict(name='zhangsan',age=34)
+
+3）字典和列表的区别：
+	a. 键类型：字典的键可以是任意不可变类型
+	b. 自动添加：如果键不在字典中，也可以为它分配值，字典会为该键值建立新的项
+	c. 成员资格：k in d（d是字典）查找的是键，而列表的 in 查找的是值（字典中查找要比列表效率高）
+4）字典格式化字符串
+	phonebook = {'zhangsan':'3543','lisi':'4578'}
+	print ("lisi's phone number is %(lisi)s." % phonebook)
+	lisi's phone number is 4578
+5)字典方法：
+	a. clear:清除字典所有项
+   	   x={};  y=x;  x['key'] = 'value'; #给x添加一项
+	   y >>> {'key':'value'} 	#y和x指向同一字典，值一样
+	     I.	x={} #x赋值一个空字典
+		y >>> {'key':'value'}   #y的值没有变，还是原来的值
+	    II.	x.clear() #用clear清空
+		y >>> {} #y值也被清空
+	备注：当两个变量指向一个字典时，如果要清空两个变量就用clear，如果只清空一个变量，则必须用赋值空字典{}来清空。
+
+	b. copy：返回一个相同的字典（浅复制）
+		x = {'name':'admin','machines':['foo','bar','baz']}
+		>>> y = x.copy()
+		>>> y['name'] = 'mlh'
+		>>> y['machines'].remove('bar')
+
+		>>> y {'name': 'mlh', 'machines': ['foo', 'baz']}
+		>>> x {'name': 'admin', 'machines': ['foo', 'baz']}
+		#y的name修改没有影响x，machines都改了值
+		#x/y的name是两个独立的字符串值，两个值的改变互不影响，而x/y的machines的值都指向同一个列表，所以一个修改了列表，两个machines的值就都变了
+		#可以用deepcopy（深复制），新复制出来的和原来的互不干涉
+
+	c. fromkeys:使用给定的键建立新的字典，每个键默认对应的值为None。
+		{}.fromkeys(['name','age']) 或 dict.fromkeys(['name','age'])
+		>>> {'age':None,'name':None}
+		#自定义默认值'aa'
+		dict.fromkeys(['name','age'],'aa')
+		>>> {'age': 'aa', 'name': 'aa'}
+
+	d. get :访问字典的项
+		用get访问不存在的键不会报错，默认返回None，也可以自定义返回值：d.get['name','N/A'] ,如果字典d中不存在name键，则返回‘N/A’
+
+	e. has_key 与 in一样是检查字典中是否包含某个键，python3.0以上取消了此函数
+
+	f. items和iteritems
+		items方法将所有字典项以列表方式返回
+		y = {'age': 34, 'name': 'mlh', 'machines': ['foo', 'baz', 'aa']}
+		y >>> [('age', 34), ('name', 'mlh'), ('machines', ['foo', 'baz', 'aa'])]
+
+		iteritems方法返回一个迭代器对象
+
+	g. keys和iterkeys：以列表形式返回字典中的键（itervalues返回键的迭代器）
+	
+	h. values和itervalues：以列表的形式返回字典中的值（itervalues返回值的迭代器）
+
+	i. pop:用来获得对应于给定键的值，然后将这个键/值对从字典中移除,返回移除项的值
+		d = {'x':2,'y':5}
+		d.pop('y') >>> 5
+		d = {'x':2}
+
+	j. popitem :随机移除字典中的项，并返回移除项的值
+	   ##因为字典是无序的，不知道最后项是哪个，所以也就不能像列表一样每次移除最后一个。当然字典也没有类似append的方法，因为不知道要在谁后面追加。）
+
+  k. setdefault：设置默认值,默认值可以自定义，如果不写，则默认值为None
+		d={}
+		d.setdefault('name','Na')	#默认值为 ‘Na’
+		d >>> {'name':'Na'}		#默认值设置成功
+		d['name'] = "zhangsan"		#给name键赋新值
+		d.setdefault('name','Na')	#再次给字典赋默认值
+		d >>> {'name':'zhangsan'}	#name的值并没有改变，只有当键不存在的时候设置默认值才有效.为已经存在的键设置默认值没有任何意义，也不会改变键的值
+
+	l. update：利用一个字典项更新另外一个字典
+		d = {'name':'zhangsan','age':23}
+		x = {'name':'lisi','H':180}
+		d.update(x)
+		d>>> {'H': 180, 'age': 23, 'name': 'lisi'}
+		###如键相同就覆盖，如果原字典（d）中没有，则插入
